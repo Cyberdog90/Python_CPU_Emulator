@@ -32,8 +32,8 @@ def pce_main():
     pc = 0
     ir = 0
     frag_eq = 0
-    assembler()
-
+    # assembler()
+    read_file()
     while True:
         ir = rom[pc]
         print("{} {:x} {} {} {} {}"
@@ -203,20 +203,67 @@ def assembler():
     rom[14] = pce_hlt()
 
 
-"""
 def read_file():
     with open("test.asm", "r", encoding="utf-8") as f:
         data = f.readlines()
+        
         counter = 0
+        
         for i in data:
             if i[0] == ";":
                 continue
-            load_order(i, counter)
+            load_instruction(i, counter)
 
 
-def load_order(order, counter):
+def load_instruction(order, counter):
     order = order.split(" ")
-    
+    if order[0] == "MOV":
+        pass
+
+    elif order[0] == "ADD":
+        pass
+
+    elif order[0] == "SUB":
+        pass
+
+    elif order[0] == "AND":
+        pass
+
+    elif order[0] == "OR":
+        pass
+
+    elif order[0] == "SL":
+        pass
+
+    elif order[0] == "SR":
+        pass
+
+    elif order[0] == "SRA":
+        pass
+
+    elif order[0] == "LDL":
+        pass
+
+    elif order[0] == "LDH":
+        pass
+
+    elif order[0] == "CMP":
+        pass
+
+    elif order[0] == "JE":
+        pass
+
+    elif order[0] == "JMP":
+        pass
+
+    elif order[0] == "LD":
+        pass
+
+    elif order[0] == "ST":
+        pass
+
+    elif order[0] == "HLT":
+        pass
 
 
 def state():
@@ -226,6 +273,6 @@ def state():
 def utility():
     pass
 
-"""
+
 if __name__ == "__main__":
     pce_main()
