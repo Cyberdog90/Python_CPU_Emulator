@@ -36,10 +36,69 @@ def pce_main():
 
     while True:
         ir = rom[pc]
+        print("{} {:x} {} {} {} {}"
+              .format(pc, ir, reg[0], reg[1], reg[2], reg[3]))
         pc += 1
-        print(ir)
-        if pce_op_code(ir):
-            pass
+
+        if pce_op_code(ir) == MOV:
+            reg[pce_op_regA(ir)] = reg[pce_op_regB(ir)]
+
+        elif pce_op_code(ir) == ADD:
+            reg[pce_op_regA(ir)] += reg[pce_op_regB(ir)]
+
+        elif pce_op_code(ir) == SUB:
+            reg[pce_op_regA(ir)] -= reg[pce_op_regB(ir)]
+
+        elif pce_op_code(ir) == AND:
+            reg[pce_op_regA(ir)] &= reg[pce_op_regB(ir)]
+
+        elif pce_op_code(ir) == OR:
+            reg[pce_op_regA(ir)] |= reg[pce_op_regB(ir)]
+
+        elif pce_op_code(ir) == SL:
+            reg[pce_op_regA(ir)] = reg[pce_op_regA(ir)] << 1
+
+        elif pce_op_code(ir) == SR:
+            reg[pce_op_regA(ir)] = reg[pce_op_regA(ir)] >> 1
+
+        elif pce_op_code(ir) == SRA:
+            reg[pce_op_regA(ir)] = (reg[pce_op_regA(ir)] & 0x8000) | \
+                                   (reg[pce_op_regA(ir)] >> 1)
+
+        elif pce_op_code(ir) == LDL:
+            reg[pce_op_regA(ir)] = (reg[pce_op_regA(ir)] & 0xff00) | \
+                                   (pce_op_data(ir) & 0x00ff)
+
+        elif pce_op_code(ir) == LDH:
+            reg[pce_op_regA(ir)] = (pce_op_data(ir) << 8) | \
+                                   (reg[pce_op_regA(ir)] & 0x00ff)
+
+        elif pce_op_code(ir) == CMP:
+            if reg[pce_op_regA(ir)] == reg[pce_op_regB(ir)]:
+                frag_eq = 1
+            else:
+                frag_eq = 0
+
+        elif pce_op_code(ir) == JE:
+            if frag_eq == 1:
+                pc = pce_op_addr(ir)
+
+        elif pce_op_code(ir) == JMP:
+            pc = pce_op_addr(ir)
+
+        elif pce_op_code(ir) == LD:
+            reg[pce_op_regA(ir)] = ram[pce_op_addr(ir)]
+
+        elif pce_op_code(ir) == ST:
+            ram[pce_op_addr(ir)] = reg[pce_op_regA(ir)]
+
+        elif pce_op_code(ir) == HLT:
+            break
+
+        else:
+            break
+
+    print("ram[64] = {}".format(ram[64]))
 
 
 def pce_mov(ra, rb):
