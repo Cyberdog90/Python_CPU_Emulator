@@ -30,14 +30,16 @@ ram = [0] * 256
 
 def pce_main():
     pc = 0
-    ir = 0
     frag_eq = 0
-    # assembler()
-    read_file()
+    assembler()
+    # read_file()
+
     while True:
         ir = rom[pc]
+
         print("{} {:x} {} {} {} {}"
               .format(pc, ir, reg[0], reg[1], reg[2], reg[3]))
+
         pc += 1
 
         if pce_op_code(ir) == MOV:
@@ -98,7 +100,8 @@ def pce_main():
         else:
             break
 
-    print("ram[64] = {}".format(ram[64]))
+    for i in range(256):
+        print("ram[{}] = {}".format(i, ram[i]))
 
 
 def pce_mov(ra, rb):
@@ -224,46 +227,48 @@ def load_instruction(order, counter):
         counter = add_instruction_set(order, counter)
 
     elif order[0] == "SUB":
-        pass
+        counter = sub_instruction_set(order, counter)
 
     elif order[0] == "AND":
-        pass
+        counter = and_instruction_set(order, counter)
 
     elif order[0] == "OR":
-        pass
+        counter = or_instruction_set(order, counter)
 
     elif order[0] == "SL":
-        pass
+        counter = sl_instruction_set(order, counter)
 
     elif order[0] == "SR":
-        pass
+        counter = sr_instruction_set(order, counter)
 
     elif order[0] == "SRA":
-        pass
+        counter = sra_instruction_set(order, counter)
 
     elif order[0] == "LDL":
-        pass
+        counter = ldl_instruction_set(order, counter)
 
     elif order[0] == "LDH":
-        pass
+        counter = ldh_instruction_set(order, counter)
 
     elif order[0] == "CMP":
-        pass
+        counter = cmp_instruction_set(order, counter)
 
     elif order[0] == "JE":
-        pass
+        counter = je_instruction_set(order, counter)
 
     elif order[0] == "JMP":
-        pass
+        counter = jmp_instruction_set(order, counter)
 
     elif order[0] == "LD":
-        pass
+        counter = ld_instruction_set(order, counter)
 
     elif order[0] == "ST":
-        pass
+        counter = st_instruction_set(order, counter)
 
     elif order[0] == "HLT":
-        pass
+        counter = hlt_instruction_set(counter)
+
+    return counter
 
 
 def mov_instruction_set(order, counter):
@@ -348,8 +353,9 @@ def st_instruction_set():
     pass
 
 
-def hlt_instruction_set():
-    pass
+def hlt_instruction_set(counter):
+    pce_hlt()
+    return counter + 1
 
 
 def state():
