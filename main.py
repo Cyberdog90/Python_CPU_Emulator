@@ -29,6 +29,7 @@ ram = [0] * 256  # データ領域
 
 
 def pce_main():
+    read_file()
     pc = 0  # プログラムカウンタ
     ir = 0  # インストラクションレジスタ
     frag_eq = 0  # 比較用フラグ変数
@@ -139,12 +140,18 @@ def assembler():
 
 
 def read_file():
-    pass
+    with open("test.asm", "r", encoding="utf-8") as f:
+        data = f.readlines()
+        counter = 0
+        for i in data:
+            if i[0] == ";":
+                continue
+            load_order(i, counter)
 
 
-def load_order():
-    pass
-
+def load_order(order, counter):
+    order = order.split(" ")
+    # if order[0]==
 
 def state():
     pass
