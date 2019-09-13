@@ -23,105 +23,110 @@ REG5 = 5
 REG6 = 6
 REG7 = 7
 
-reg = [0] * 8  # 汎用レジスタ
-rom = [0] * 256  # プログラム領域
-ram = [0] * 256  # データ領域
+reg = [0] * 8
+rom = [0] * 256
+ram = [0] * 256
 
 
 def pce_main():
-    read_file()
-    pc = 0  # プログラムカウンタ
-    ir = 0  # インストラクションレジスタ
-    frag_eq = 0  # 比較用フラグ変数
+    pc = 0
+    ir = 0
+    frag_eq = 0
     assembler()
 
-
-def pce_mov():
-    pass
-
-
-def pce_add():
-    pass
-
-
-def pce_sub():
-    pass
+    while True:
+        ir = rom[pc]
+        pc += 1
+        print(ir)
+        if pce_op_code(ir):
+            pass
 
 
-def pce_and():
-    pass
+def pce_mov(ra, rb):
+    return (MOV << 11) | (ra << 8) | (rb << 5)
 
 
-def pce_or():
-    pass
+def pce_add(ra, rb):
+    return (ADD << 11) | (ra << 8) | (rb << 5)
 
 
-def pce_sl():
-    pass
+def pce_sub(ra, rb):
+    return (SUB << 11) | (ra << 8) | (rb << 5)
 
 
-def pce_sr():
-    pass
+def pce_and(ra, rb):
+    return (AND << 11) | (ra << 8) | (rb << 5)
 
 
-def pce_sra():
-    pass
+def pce_or(ra, rb):
+    return (OR << 11) | (ra << 8) | (rb << 5)
 
 
-def pce_ldl():
-    pass
+def pce_sl(ra):
+    return (SL << 11) | (ra << 8)
 
 
-def pce_ldh():
-    pass
+def pce_sr(ra):
+    return (SR << 11) | (ra << 8)
 
 
-def pce_cmp():
-    pass
+def pce_sra(ra):
+    return (SRA << 11) | (ra << 8)
 
 
-def pce_je():
-    pass
+def pce_ldl(ra, ival):
+    return (LDL << 11) | (ra << 8) | (ival & 0x00ff)
 
 
-def pce_jmp():
-    pass
+def pce_ldh(ra, ival):
+    return (LDH << 11) | (ra << 8) | (ival & 0x00ff)
 
 
-def pce_ld():
-    pass
+def pce_cmp(ra, rb):
+    return (CMP << 11) | (ra << 8) | (rb << 5)
 
 
-def pce_st():
-    pass
+def pce_je(addr):
+    return (JE << 11) | (addr & 0x00ff)
+
+
+def pce_jmp(addr):
+    return (JMP << 11) | (addr & 0x00ff)
+
+
+def pce_ld(ra, addr):
+    return (LD << 11) | (ra << 8) | (addr & 0x00ff)
+
+
+def pce_st(ra, addr):
+    return (ST << 11) | (ra << 8) | (addr & 0x00ff)
 
 
 def pce_hlt():
-    pass
+    return HLT << 11
 
 
-def pce_op_code():
-    pass
+def pce_op_code(ir):
+    return ir >> 11
 
 
-def pce_op_regA():
-    pass
+def pce_op_regA(ir):
+    return (ir >> 8) & 0x0007
 
 
-def pce_op_regB():
-    pass
+def pce_op_regB(ir):
+    return (ir >> 5) & 0x0007
 
 
-def pce_op_data():
-    pass
+def pce_op_data(ir):
+    return ir & 0x00ff
 
 
-def pce_op_addr():
-    pass
+def pce_op_addr(ir):
+    return ir & 0x00ff
 
 
 def assembler():
-    # テスト用コード
     rom[0] = pce_ldh(REG0, 0)
     rom[1] = pce_ldl(REG0, 0)
     rom[2] = pce_ldh(REG1, 0)
@@ -139,6 +144,7 @@ def assembler():
     rom[14] = pce_hlt()
 
 
+"""
 def read_file():
     with open("test.asm", "r", encoding="utf-8") as f:
         data = f.readlines()
@@ -151,7 +157,8 @@ def read_file():
 
 def load_order(order, counter):
     order = order.split(" ")
-    # if order[0]==
+    
+
 
 def state():
     pass
@@ -160,6 +167,6 @@ def state():
 def utility():
     pass
 
-
+"""
 if __name__ == "__main__":
     pce_main()
