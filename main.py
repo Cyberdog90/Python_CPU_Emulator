@@ -206,9 +206,9 @@ def assembler():
 def read_file():
     with open("test.asm", "r", encoding="utf-8") as f:
         data = f.readlines()
-        
+
         counter = 0
-        
+
         for i in data:
             if i[0] == ";":
                 continue
@@ -218,10 +218,10 @@ def read_file():
 def load_instruction(order, counter):
     order = order.split(" ")
     if order[0] == "MOV":
-        pass
+        counter = mov_instruction_set(order, counter)
 
     elif order[0] == "ADD":
-        pass
+        counter = add_instruction_set(order, counter)
 
     elif order[0] == "SUB":
         pass
@@ -264,6 +264,92 @@ def load_instruction(order, counter):
 
     elif order[0] == "HLT":
         pass
+
+
+def mov_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_mov(ra, rb)
+    return counter + 1
+
+
+def add_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_add(ra, rb)
+    return counter + 1
+
+
+def sub_instruction_set():
+    pass
+
+
+def and_instruction_set():
+    pass
+
+
+def or_instruction_set():
+    pass
+
+
+def sl_instruction_set():
+    pass
+
+
+def sr_instruction_set():
+    pass
+
+
+def sra_instruction_set():
+    pass
+
+
+def ldl_instruction_set():
+    pass
+
+
+def ldh_instruction_set():
+    pass
+
+
+def cmp_instruction_set():
+    pass
+
+
+def je_instruction_set():
+    pass
+
+
+def jmp_instruction_set():
+    pass
+
+
+def ld_instruction_set():
+    pass
+
+
+def st_instruction_set():
+    pass
+
+
+def hlt_instruction_set():
+    pass
 
 
 def state():
