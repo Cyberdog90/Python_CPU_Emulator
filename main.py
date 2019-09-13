@@ -31,8 +31,8 @@ ram = [0] * 256
 def pce_main():
     pc = 0
     frag_eq = 0
-    assembler()
-    # read_file()
+    # assembler()
+    read_file()
 
     while True:
         ir = rom[pc]
@@ -301,56 +301,174 @@ def add_instruction_set(order, counter):
     return counter + 1
 
 
-def sub_instruction_set():
-    pass
+def sub_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_sub(ra, rb)
+    return counter + 1
 
 
-def and_instruction_set():
-    pass
+def and_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_and(ra, rb)
+    return counter + 1
 
 
-def or_instruction_set():
-    pass
+def or_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_or(ra, rb)
+    return counter + 1
 
 
-def sl_instruction_set():
-    pass
+def sl_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    rom[counter] = pce_sl(ra)
+    return counter + 1
 
 
-def sr_instruction_set():
-    pass
+def sr_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    rom[counter] = pce_sr(ra)
+    return counter + 1
 
 
-def sra_instruction_set():
-    pass
+def sra_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    rom[counter] = pce_sra(ra)
+    return counter + 1
 
 
-def ldl_instruction_set():
-    pass
+def ldl_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_ldl(ra, rb)
+    return counter + 1
 
 
-def ldh_instruction_set():
-    pass
+def ldh_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_ldh(ra, rb)
+    return counter + 1
 
 
-def cmp_instruction_set():
-    pass
+def cmp_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_cmp(ra, rb)
+    return counter + 1
 
 
-def je_instruction_set():
-    pass
+def je_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    rom[counter] = pce_je(ra)
+    return counter + 1
 
 
-def jmp_instruction_set():
-    pass
+def jmp_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    rom[counter] = pce_jmp(ra)
+    return counter + 1
 
 
-def ld_instruction_set():
-    pass
+def ld_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_ld(ra, rb)
+    return counter + 1
 
 
-def st_instruction_set():
-    pass
+def st_instruction_set(order, counter):
+    if order[1].isdecimal():
+        ra = int(order[1])
+    else:
+        ra = order[1]
+
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = order[2]
+
+    rom[counter] = pce_st(ra, rb)
+    return counter + 1
 
 
 def hlt_instruction_set(counter):
