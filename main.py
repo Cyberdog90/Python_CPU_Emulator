@@ -31,8 +31,8 @@ ram = [0] * 256
 def pce_main():
     pc = 0
     frag_eq = 0
-    # assembler()
-    read_file()
+    assembler()
+    # read_file()
 
     while True:
         ir = rom[pc]
@@ -206,6 +206,7 @@ def assembler():
     rom[14] = pce_hlt()
 
 
+"""
 def read_file():
     with open("test.asm", "r", encoding="utf-8") as f:
         data = f.readlines()
@@ -551,7 +552,7 @@ def state():
 
 def utility():
     pass
-
+"""
 
 if __name__ == "__main__":
     pce_main()
