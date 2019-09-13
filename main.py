@@ -274,11 +274,15 @@ def load_instruction(order, counter):
 def mov_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -289,11 +293,15 @@ def mov_instruction_set(order, counter):
 def add_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -304,11 +312,15 @@ def add_instruction_set(order, counter):
 def sub_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -319,11 +331,15 @@ def sub_instruction_set(order, counter):
 def and_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -334,11 +350,15 @@ def and_instruction_set(order, counter):
 def or_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -349,6 +369,8 @@ def or_instruction_set(order, counter):
 def sl_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
@@ -359,6 +381,8 @@ def sl_instruction_set(order, counter):
 def sr_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
@@ -369,6 +393,8 @@ def sr_instruction_set(order, counter):
 def sra_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
@@ -379,11 +405,15 @@ def sra_instruction_set(order, counter):
 def ldl_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -394,11 +424,15 @@ def ldl_instruction_set(order, counter):
 def ldh_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -409,11 +443,15 @@ def ldh_instruction_set(order, counter):
 def cmp_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -424,6 +462,8 @@ def cmp_instruction_set(order, counter):
 def je_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
@@ -434,6 +474,8 @@ def je_instruction_set(order, counter):
 def jmp_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
@@ -444,11 +486,15 @@ def jmp_instruction_set(order, counter):
 def ld_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -459,11 +505,15 @@ def ld_instruction_set(order, counter):
 def st_instruction_set(order, counter):
     if order[1].isdecimal():
         ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
     else:
         ra = order[1]
 
     if order[2].isdecimal():
         rb = int(order[2])
+    elif "REG" in order[1]:
+        rb = reg_return(order[1])
     else:
         rb = order[2]
 
@@ -474,6 +524,25 @@ def st_instruction_set(order, counter):
 def hlt_instruction_set(counter):
     pce_hlt()
     return counter + 1
+
+
+def reg_return(arg_reg):
+    if arg_reg == "REG0":
+        return REG0
+    elif arg_reg == "REG1":
+        return REG1
+    elif arg_reg == "REG2":
+        return REG2
+    elif arg_reg == "REG3":
+        return REG3
+    elif arg_reg == "REG4":
+        return REG4
+    elif arg_reg == "REG5":
+        return REG5
+    elif arg_reg == "REG6":
+        return REG6
+    else:
+        return REG7
 
 
 def state():
