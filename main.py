@@ -1,3 +1,5 @@
+import re
+
 MOV = 0
 ADD = 1
 SUB = 2
@@ -198,6 +200,8 @@ def read_file():
 
 
 def load_instruction(order, counter):
+    order = re.sub(r"\s+", " ", order)
+    order = re.sub(r"\s+\n", "\n", order)
     order = order.split(" ")
     if order[0] == "MOV":
         ra, rb = parse_mnemonic(order)
