@@ -14,4 +14,3 @@ CMP REG2  REG3
 JE 14
 JMP 8
 HLT
-;ここまで
