@@ -31,11 +31,11 @@ ram = [0] * 256
 def pce_main():
     pc = 0
     frag_eq = 0
-    read_file()
+
+    asm_read_file()
 
     while True:
         ir = rom[pc]
-
         pc += 1
 
         if pce_op_code(ir) == MOV:
@@ -181,7 +181,7 @@ def pce_op_addr(ir):
     return ir & 0x00ff
 
 
-def read_file():
+def asm_read_file():
     with open("test.asm", "r", encoding="utf-8") as f:
         data = f.readlines()
 
@@ -190,69 +190,69 @@ def read_file():
         for i in data:
             if i[0] == ";":
                 continue
-            counter = load_instruction(i, counter)
+            counter = asm_load_instruction(i, counter)
 
 
-def load_instruction(order, counter):
+def asm_load_instruction(order, counter):
     order = order.split(" ")
     if order[0] == "MOV":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_mov(ra, rb)
 
     elif order[0] == "ADD":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_add(ra, rb)
 
     elif order[0] == "SUB":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_sub(ra, rb)
 
     elif order[0] == "AND":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_and(ra, rb)
 
     elif order[0] == "OR":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_or(ra, rb)
 
     elif order[0] == "SL":
-        ra = parse_mnemonic(order)
+        ra = asm_parse_mnemonic(order)
         rom[counter] = pce_sl(ra)
 
     elif order[0] == "SR":
-        ra = parse_mnemonic(order)
+        ra = asm_parse_mnemonic(order)
         rom[counter] = pce_sr(ra)
 
     elif order[0] == "SRA":
-        ra = parse_mnemonic(order)
+        ra = asm_parse_mnemonic(order)
         rom[counter] = pce_sra(ra)
 
     elif order[0] == "LDL":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_ldl(ra, rb)
 
     elif order[0] == "LDH":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_ldh(ra, rb)
 
     elif order[0] == "CMP":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_cmp(ra, rb)
 
     elif order[0] == "JE":
-        ra = parse_mnemonic(order)
+        ra = asm_parse_mnemonic(order)
         rom[counter] = pce_je(ra)
 
     elif order[0] == "JMP":
-        ra = parse_mnemonic(order)
+        ra = asm_parse_mnemonic(order)
         rom[counter] = pce_jmp(ra)
 
     elif order[0] == "LD":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_ld(ra, rb)
 
     elif order[0] == "ST":
-        ra, rb = parse_mnemonic(order)
+        ra, rb = asm_parse_mnemonic(order)
         rom[counter] = pce_st(ra, rb)
 
     elif order[0] == "HLT\n":
@@ -261,13 +261,13 @@ def load_instruction(order, counter):
     return counter + 1
 
 
-def parse_mnemonic(order):
+def asm_parse_mnemonic(order):
     order[1] = order[1].strip("\n")
 
     if order[1].isdecimal():
         ra = int(order[1])
     else:
-        ra = reg_return(order[1])
+        ra = asm_reg_return(order[1])
 
     if len(order) == 2:
         return ra
@@ -277,12 +277,12 @@ def parse_mnemonic(order):
     if order[2].isdecimal():
         rb = int(order[2])
     else:
-        rb = reg_return(order[2])
+        rb = asm_reg_return(order[2])
 
     return ra, rb
 
 
-def reg_return(arg_reg):
+def asm_reg_return(arg_reg):
     if arg_reg == "REG0":
         return REG0
     elif arg_reg == "REG1":
