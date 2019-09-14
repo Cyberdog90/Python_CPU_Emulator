@@ -263,21 +263,19 @@ def load_instruction(order, counter):
 
 def parse_mnemonic(order):
     order[1] = order[1].strip("\n")
+
     if order[1].isdecimal():
         ra = int(order[1])
     elif "REG" in order[1]:
         ra = reg_return(order[1])
-    else:
-        ra = order[1]
 
     if len(order) == 3:
         order[2] = order[2].strip("\n")
+
         if order[2].isdecimal():
             rb = int(order[2])
         elif "REG" in order[2]:
             rb = reg_return(order[2])
-        else:
-            rb = order[2]
 
         return ra, rb
     return ra
