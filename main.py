@@ -184,6 +184,7 @@ def pce_op_addr(ir):
 def read_file():
     with open("test.asm", "r", encoding="utf-8") as f:
         data = f.readlines()
+
         counter = 0
 
         for i in data:
@@ -197,83 +198,67 @@ def load_instruction(order, counter):
     if order[0] == "MOV":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_mov(ra, rb)
-        counter += 1
 
     elif order[0] == "ADD":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_add(ra, rb)
-        counter += 1
 
     elif order[0] == "SUB":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_sub(ra, rb)
-        counter += 1
 
     elif order[0] == "AND":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_and(ra, rb)
-        counter += 1
 
     elif order[0] == "OR":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_or(ra, rb)
-        counter += 1
 
     elif order[0] == "SL":
         ra = parse_mnemonic(order)
         rom[counter] = pce_sl(ra)
-        counter += 1
 
     elif order[0] == "SR":
         ra = parse_mnemonic(order)
         rom[counter] = pce_sr(ra)
-        counter += 1
 
     elif order[0] == "SRA":
         ra = parse_mnemonic(order)
         rom[counter] = pce_sra(ra)
-        counter += 1
 
     elif order[0] == "LDL":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_ldl(ra, rb)
-        counter += 1
 
     elif order[0] == "LDH":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_ldh(ra, rb)
-        counter += 1
 
     elif order[0] == "CMP":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_cmp(ra, rb)
-        counter += 1
 
     elif order[0] == "JE":
         ra = parse_mnemonic(order)
         rom[counter] = pce_je(ra)
-        counter += 1
 
     elif order[0] == "JMP":
         ra = parse_mnemonic(order)
         rom[counter] = pce_jmp(ra)
-        counter += 1
 
     elif order[0] == "LD":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_ld(ra, rb)
-        counter += 1
 
     elif order[0] == "ST":
         ra, rb = parse_mnemonic(order)
         rom[counter] = pce_st(ra, rb)
-        counter += 1
 
     elif order[0] == "HLT\n":
         rom[counter] = pce_hlt()
-        counter += 1
 
-    return counter
+    return counter + 1
 
 
 def parse_mnemonic(order):
