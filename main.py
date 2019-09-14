@@ -1,5 +1,3 @@
-# import re
-
 MOV = 0
 ADD = 1
 SUB = 2
@@ -37,9 +35,6 @@ def pce_main():
 
     while True:
         ir = rom[pc]
-
-        print("{} {:x} {} {} {} {}"
-              .format(pc, ir, reg[0], reg[1], reg[2], reg[3]))
 
         pc += 1
 
@@ -100,8 +95,6 @@ def pce_main():
 
         else:
             break
-
-    print("{}".format(ram[64]))
 
 
 def pce_mov(ra, rb):
@@ -200,8 +193,6 @@ def read_file():
 
 
 def load_instruction(order, counter):
-    # order = re.sub(r"\s+", " ", order)
-    # order = re.sub(r"\s+\n", "\n", order)
     order = order.split(" ")
     if order[0] == "MOV":
         ra, rb = parse_mnemonic(order)
