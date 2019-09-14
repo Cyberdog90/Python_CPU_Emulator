@@ -266,19 +266,20 @@ def parse_mnemonic(order):
 
     if order[1].isdecimal():
         ra = int(order[1])
-    elif "REG" in order[1]:
+    else:
         ra = reg_return(order[1])
 
-    if len(order) == 3:
-        order[2] = order[2].strip("\n")
+    if len(order) == 2:
+        return ra
 
-        if order[2].isdecimal():
-            rb = int(order[2])
-        elif "REG" in order[2]:
-            rb = reg_return(order[2])
+    order[2] = order[2].strip("\n")
 
-        return ra, rb
-    return ra
+    if order[2].isdecimal():
+        rb = int(order[2])
+    else:
+        rb = reg_return(order[2])
+
+    return ra, rb
 
 
 def reg_return(arg_reg):
