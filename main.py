@@ -32,10 +32,18 @@ def pce_main():
     pc = 0
     frag_eq = 0
 
-    asm_read_file()
+    count = 1
 
+    asm_read_file()
+    print("|{}{}{}|".format("-" * 87, "reg status", "-" * 87))
     while True:
         ir = rom[pc]
+        print("count : {:5}   program_counter {:5}   ir : {:5x}   "
+              "reg[0] : {:5}   reg[1] : {:5}   reg[2] : {:5}   reg[3] : {:5}  "
+              " reg[4] : {:5}   reg[5] : {:5}   reg[6] : {:5}   reg[7] : {:5}"
+              .format(count, pc, ir, reg[0], reg[1], reg[2], reg[3],
+                      reg[4], reg[5], reg[6], reg[7]))
+        count += 1
         pc += 1
 
         if pce_op_code(ir) == MOV:
@@ -95,6 +103,18 @@ def pce_main():
 
         else:
             break
+
+    print("\n|{}{}{}|".format("-" * 87, "rom status", "-" * 87))
+    for i in range(0, 256):
+        print("rom[{:3}] = {:5}   ".format(i, rom[i]), end="")
+        if (i + 1) % 8 == 0:
+            print()
+
+    print("\n|{}{}{}|".format("-" * 87, "ram status", "-" * 87))
+    for i in range(0, 256):
+        print("ram[{:3}] = {:5}   ".format(i, ram[i]), end="")
+        if (i + 1) % 8 == 0:
+            print()
 
 
 def pce_mov(ra, rb):
@@ -266,8 +286,10 @@ def asm_parse_mnemonic(order):
 
     if order[1].isdecimal():
         ra = int(order[1])
-    else:
+    elif "REG" in order[1]:
         ra = asm_reg_return(order[1])
+    else:
+        ra = None
 
     if len(order) == 2:
         return ra
@@ -276,8 +298,10 @@ def asm_parse_mnemonic(order):
 
     if order[2].isdecimal():
         rb = int(order[2])
-    else:
+    elif "REG" in order[2]:
         rb = asm_reg_return(order[2])
+    else:
+        rb = None
 
     return ra, rb
 
@@ -297,8 +321,10 @@ def asm_reg_return(arg_reg):
         return REG5
     elif arg_reg == "REG6":
         return REG6
-    else:
+    elif arg_reg == "REG7":
         return REG7
+    else:
+        return None
 
 
 if __name__ == "__main__":
