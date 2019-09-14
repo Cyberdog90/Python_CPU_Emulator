@@ -31,8 +31,7 @@ ram = [0] * 256
 def pce_main():
     pc = 0
     frag_eq = 0
-    assembler()
-    # read_file()
+    read_file()
 
     while True:
         ir = rom[pc]
@@ -100,8 +99,7 @@ def pce_main():
         else:
             break
 
-    for i in range(256):
-        print("ram[{}] = {}".format(i, ram[i]))
+    print("{}".format(ram[64]))
 
 
 def pce_mov(ra, rb):
@@ -188,22 +186,140 @@ def pce_op_addr(ir):
     return ir & 0x00ff
 
 
-def assembler():
-    rom[0] = pce_ldh(REG0, 0)
-    rom[1] = pce_ldl(REG0, 0)
-    rom[2] = pce_ldh(REG1, 0)
-    rom[3] = pce_ldl(REG1, 1)
-    rom[4] = pce_ldh(REG2, 0)
-    rom[5] = pce_ldl(REG2, 0)
-    rom[6] = pce_ldh(REG3, 0)
-    rom[7] = pce_ldl(REG3, 10)
-    rom[8] = pce_add(REG2, REG1)
-    rom[9] = pce_add(REG0, REG2)
-    rom[10] = pce_st(REG0, 64)
-    rom[11] = pce_cmp(REG2, REG3)
-    rom[12] = pce_je(14)
-    rom[13] = pce_jmp(8)
-    rom[14] = pce_hlt()
+def read_file():
+    with open("test.asm", "r", encoding="utf-8") as f:
+        data = f.readlines()
+        counter = 0
+
+        for i in data:
+            if i[0] == ";":
+                continue
+            counter = load_instruction(i, counter)
+
+
+def load_instruction(order, counter):
+    order = order.split(" ")
+    if order[0] == "MOV":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_mov(ra, rb)
+        counter += 1
+
+    elif order[0] == "ADD":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_add(ra, rb)
+        counter += 1
+
+    elif order[0] == "SUB":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_sub(ra, rb)
+        counter += 1
+
+    elif order[0] == "AND":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_and(ra, rb)
+        counter += 1
+
+    elif order[0] == "OR":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_or(ra, rb)
+        counter += 1
+
+    elif order[0] == "SL":
+        ra = parse_mnemonic(order)
+        rom[counter] = pce_sl(ra)
+        counter += 1
+
+    elif order[0] == "SR":
+        ra = parse_mnemonic(order)
+        rom[counter] = pce_sr(ra)
+        counter += 1
+
+    elif order[0] == "SRA":
+        ra = parse_mnemonic(order)
+        rom[counter] = pce_sra(ra)
+        counter += 1
+
+    elif order[0] == "LDL":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_ldl(ra, rb)
+        counter += 1
+
+    elif order[0] == "LDH":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_ldh(ra, rb)
+        counter += 1
+
+    elif order[0] == "CMP":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_cmp(ra, rb)
+        counter += 1
+
+    elif order[0] == "JE":
+        ra = parse_mnemonic(order)
+        rom[counter] = pce_je(ra)
+        counter += 1
+
+    elif order[0] == "JMP":
+        ra = parse_mnemonic(order)
+        rom[counter] = pce_jmp(ra)
+        counter += 1
+
+    elif order[0] == "LD":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_ld(ra, rb)
+        counter += 1
+
+    elif order[0] == "ST":
+        ra, rb = parse_mnemonic(order)
+        rom[counter] = pce_st(ra, rb)
+        counter += 1
+
+    elif order[0] == "HLT\n":
+        rom[counter] = pce_hlt()
+        counter += 1
+
+    return counter
+
+
+def parse_mnemonic(order):
+    order[1] = order[1].strip("\n")
+    if order[1].isdecimal():
+        ra = int(order[1])
+    elif "REG" in order[1]:
+        ra = reg_return(order[1])
+    else:
+        ra = order[1]
+
+    if len(order) == 3:
+        order[2] = order[2].strip("\n")
+        if order[2].isdecimal():
+            rb = int(order[2])
+        elif "REG" in order[2]:
+            rb = reg_return(order[2])
+        else:
+            rb = order[2]
+
+        return ra, rb
+    return ra
+
+
+def reg_return(arg_reg):
+    if arg_reg == "REG0":
+        return REG0
+    elif arg_reg == "REG1":
+        return REG1
+    elif arg_reg == "REG2":
+        return REG2
+    elif arg_reg == "REG3":
+        return REG3
+    elif arg_reg == "REG4":
+        return REG4
+    elif arg_reg == "REG5":
+        return REG5
+    elif arg_reg == "REG6":
+        return REG6
+    else:
+        return REG7
 
 
 if __name__ == "__main__":
