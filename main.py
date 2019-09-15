@@ -38,67 +38,67 @@ def pce_main():
     print("|{}{}{}|".format("-" * 87, "reg status", "-" * 87))
     while True:
         ir = rom[pc]
-        print("count : {:5}   program_counter {:5}   ir : {:5x}   "
+        print("count : {:5}   program_counter {:5}   ir : {:4x}   "
               "reg[0] : {:5}   reg[1] : {:5}   reg[2] : {:5}   reg[3] : {:5}  "
               " reg[4] : {:5}   reg[5] : {:5}   reg[6] : {:5}   reg[7] : {:5}"
               .format(count, pc, ir, reg[0], reg[1], reg[2], reg[3],
                       reg[4], reg[5], reg[6], reg[7]))
         count += 1
         pc += 1
-
-        if pce_op_code(ir) == MOV:
+        op_code = pce_op_code(ir)
+        if op_code == MOV:
             reg[pce_op_regA(ir)] = reg[pce_op_regB(ir)]
 
-        elif pce_op_code(ir) == ADD:
+        elif op_code == ADD:
             reg[pce_op_regA(ir)] += reg[pce_op_regB(ir)]
 
-        elif pce_op_code(ir) == SUB:
+        elif op_code == SUB:
             reg[pce_op_regA(ir)] -= reg[pce_op_regB(ir)]
 
-        elif pce_op_code(ir) == AND:
+        elif op_code == AND:
             reg[pce_op_regA(ir)] &= reg[pce_op_regB(ir)]
 
-        elif pce_op_code(ir) == OR:
+        elif op_code == OR:
             reg[pce_op_regA(ir)] |= reg[pce_op_regB(ir)]
 
-        elif pce_op_code(ir) == SL:
+        elif op_code == SL:
             reg[pce_op_regA(ir)] = reg[pce_op_regA(ir)] << 1
 
-        elif pce_op_code(ir) == SR:
+        elif op_code == SR:
             reg[pce_op_regA(ir)] = reg[pce_op_regA(ir)] >> 1
 
-        elif pce_op_code(ir) == SRA:
+        elif op_code == SRA:
             reg[pce_op_regA(ir)] = (reg[pce_op_regA(ir)] & 0x8000) | \
                                    (reg[pce_op_regA(ir)] >> 1)
 
-        elif pce_op_code(ir) == LDL:
+        elif op_code == LDL:
             reg[pce_op_regA(ir)] = (reg[pce_op_regA(ir)] & 0xff00) | \
                                    (pce_op_data(ir) & 0x00ff)
 
-        elif pce_op_code(ir) == LDH:
+        elif op_code == LDH:
             reg[pce_op_regA(ir)] = (pce_op_data(ir) << 8) | \
                                    (reg[pce_op_regA(ir)] & 0x00ff)
 
-        elif pce_op_code(ir) == CMP:
+        elif op_code == CMP:
             if reg[pce_op_regA(ir)] == reg[pce_op_regB(ir)]:
                 frag_eq = 1
             else:
                 frag_eq = 0
 
-        elif pce_op_code(ir) == JE:
+        elif op_code == JE:
             if frag_eq == 1:
                 pc = pce_op_addr(ir)
 
-        elif pce_op_code(ir) == JMP:
+        elif op_code == JMP:
             pc = pce_op_addr(ir)
 
-        elif pce_op_code(ir) == LD:
+        elif op_code == LD:
             reg[pce_op_regA(ir)] = ram[pce_op_addr(ir)]
 
-        elif pce_op_code(ir) == ST:
+        elif op_code == ST:
             ram[pce_op_addr(ir)] = reg[pce_op_regA(ir)]
 
-        elif pce_op_code(ir) == HLT:
+        elif op_code == HLT:
             break
 
         else:
