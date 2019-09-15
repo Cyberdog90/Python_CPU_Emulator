@@ -14,6 +14,7 @@ JMP = 12
 LD = 13
 ST = 14
 HLT = 15
+
 REG0 = 0
 REG1 = 1
 REG2 = 2
@@ -38,14 +39,29 @@ def pce_main():
     print("|{}{}{}|".format("-" * 87, "reg status", "-" * 87))
     while True:
         ir = rom[pc]
-        print("count : {:5}   program_counter {:5}   ir : {:4x}   "
-              "reg[0] : {:5}   reg[1] : {:5}   reg[2] : {:5}   reg[3] : {:5}  "
-              " reg[4] : {:5}   reg[5] : {:5}   reg[6] : {:5}   reg[7] : {:5}"
-              .format(count, pc, ir, reg[0], reg[1], reg[2], reg[3],
+
+        print("count : {:5}   "
+              "program_counter {:5}   "
+              "ir : {:4x}   "
+              "reg[0] : {:5}   "
+              "reg[1] : {:5}   "
+              "reg[2] : {:5}   "
+              "reg[3] : {:5}   "
+              "reg[4] : {:5}   "
+              "reg[5] : {:5}   "
+              "reg[6] : {:5}   "
+              "reg[7] : {:5}"
+              .format(count,
+                      pc,
+                      ir,
+                      reg[0], reg[1], reg[2], reg[3],
                       reg[4], reg[5], reg[6], reg[7]))
+
         count += 1
         pc += 1
+
         op_code = pce_op_code(ir)
+
         if op_code == MOV:
             reg[pce_op_regA(ir)] = reg[pce_op_regB(ir)]
 
@@ -105,14 +121,18 @@ def pce_main():
             break
 
     print("\n|{}{}{}|".format("-" * 87, "rom status", "-" * 87))
+
     for i in range(0, 256):
         print("rom[{:3}] = {:5}   ".format(i, rom[i]), end="")
+
         if (i + 1) % 8 == 0:
             print()
 
     print("\n|{}{}{}|".format("-" * 87, "ram status", "-" * 87))
+
     for i in range(0, 256):
         print("ram[{:3}] = {:5}   ".format(i, ram[i]), end="")
+
         if (i + 1) % 8 == 0:
             print()
 
